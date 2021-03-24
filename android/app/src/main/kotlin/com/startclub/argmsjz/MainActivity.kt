@@ -1,4 +1,4 @@
-package com.example.arg_msjz
+package com.startclub.argmsjz
 
 import io.flutter.embedding.android.FlutterActivity
 
