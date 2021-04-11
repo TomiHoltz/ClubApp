@@ -1,5 +1,7 @@
 import 'package:arg_msjz/News/model/New.dart';
+import 'package:arg_msjz/News/ui/screens/complete_new_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../constants.dart';
 
@@ -84,7 +86,12 @@ class NewCard extends StatelessWidget {
                         style: TextStyle(color: kDarkBlackColor),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: CompleteNewScreen(newForThisScreen: newForThisCard,), type:PageTransitionType.bottomToTop));
+                    },
                   )
                 ],
               ),
