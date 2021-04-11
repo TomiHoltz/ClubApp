@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 class ClubHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NewsScreen(),
-    );
+    return NewsScreen();
   }
 }
