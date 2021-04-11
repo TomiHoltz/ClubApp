@@ -1,9 +1,16 @@
 import 'package:arg_msjz/constants.dart';
 import 'package:arg_msjz/splash_screen_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+    .then((_) {
+      runApp(new MyApp());
+    });
 }
 
 class MyApp extends StatelessWidget {
@@ -11,13 +18,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: clubName,
       theme: ThemeData(
         primarySwatch: kPrimaryColor,
-        accentColor: kSecondaryColor
+        scaffoldBackgroundColor: Color(0xFFE7E7E7),
       ),
       home: SplashScreenPage(),
     );
   }
 }
-

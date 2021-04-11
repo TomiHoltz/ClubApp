@@ -6,4 +6,6 @@ const clubShieldPhotoPath = "assets/arg.png";
 
 const kPrimaryColor = Colors.red;
 const kSecondaryColor = Colors.white;
-const kAccentColor = Colors.black;
+const kDarkBlackColor = Colors.black;
+
+const kDefaultPadding = 20.0;
