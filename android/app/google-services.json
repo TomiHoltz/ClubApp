@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1027158545205",
+    "project_id": "clubargmsjz",
+    "storage_bucket": "clubargmsjz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027158545205:android:4afe0d4ef68c3efe0f727c",
+        "android_client_info": {
+          "package_name": "com.startclub.argmsjz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027158545205-8g4msons18r8h0ao08mng1k9tlr8s063.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd0qpVpLqRpGo5G96fuRjsmzC1Ws5zyGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027158545205-8g4msons18r8h0ao08mng1k9tlr8s063.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
