@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:arg_msjz/News/model/New.dart';
 import 'package:arg_msjz/News/ui/screens/complete_new_screen.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +7,38 @@ import 'package:page_transition/page_transition.dart';
 
 import '../../../constants.dart';
 
-class NewCard extends StatelessWidget {
+class NewCard extends StatefulWidget {
   final New newForThisCard;
 
-  NewCard({@required this.newForThisCard});
+  NewCard(
+      {@required this.newForThisCard,});
+
+  @override
+  _NewCardState createState() => _NewCardState();
+}
+
+class _NewCardState extends State<NewCard> {
+  selectImage() {
+    if (widget.newForThisCard.isAnAssetImage) {
+      return Image.asset(
+        widget.newForThisCard.image,
+        fit: BoxFit.cover,
+      );
+    } else if (widget.newForThisCard.isAGalleryImage) {
+      return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: FileImage(File(widget.newForThisCard.image)),
+                fit: BoxFit.cover)),
+      );
+    } else if (widget.newForThisCard.isANetworkImage) {
+      return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(widget.newForThisCard.image),
+                fit: BoxFit.cover)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +48,7 @@ class NewCard extends StatelessWidget {
         child: Column(
           children: [
             //Image
-            AspectRatio(
-                aspectRatio: 2.0,
-                child: Image.asset(
-                  newForThisCard.image,
-                  fit: BoxFit.cover,
-                )),
+            AspectRatio(aspectRatio: 2.0, child: selectImage()),
             //Post Information
             Container(
               padding: EdgeInsets.all(kDefaultPadding * 0.75),
@@ -40,7 +65,7 @@ class NewCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        newForThisCard.section.toUpperCase(),
+                        widget.newForThisCard.section.toUpperCase(),
                         style: TextStyle(
                           color: kDarkBlackColor,
                           fontSize: 12.0,
@@ -48,15 +73,14 @@ class NewCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: kDefaultPadding),
-                      Text(newForThisCard.date,
+                      Text(widget.newForThisCard.date,
                           style: Theme.of(context).textTheme.caption),
                     ],
                   ),
                   //Title
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                        newForThisCard.title,
+                    child: Text(widget.newForThisCard.title,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -68,7 +92,7 @@ class NewCard extends StatelessWidget {
                   ),
                   //Description
                   Text(
-                    newForThisCard.description,
+                    widget.newForThisCard.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(height: 1.5),
@@ -88,9 +112,12 @@ class NewCard extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: CompleteNewScreen(newForThisScreen: newForThisCard,), type:PageTransitionType.bottomToTop));
+                          context,
+                          PageTransition(
+                              child: CompleteNewScreen(
+                                newForThisScreen: widget.newForThisCard,
+                              ),
+                              type: PageTransitionType.bottomToTop));
                     },
                   )
                 ],

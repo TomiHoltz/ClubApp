@@ -1,15 +1,44 @@
+import 'dart:io';
+
 import 'package:arg_msjz/News/model/New.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
-class CompleteNew extends StatelessWidget {
+class CompleteNew extends StatefulWidget {
   const CompleteNew({
     Key key,
     @required this.newForThisScreen,
   }) : super(key: key);
 
   final New newForThisScreen;
+
+  @override
+  _CompleteNewState createState() => _CompleteNewState();
+}
+
+class _CompleteNewState extends State<CompleteNew> {
+  selectImage() {
+    if (widget.newForThisScreen.isAnAssetImage) {
+      return Image.asset(
+        widget.newForThisScreen.image,
+        fit: BoxFit.cover,
+      );
+    } else if (widget.newForThisScreen.isAGalleryImage) {
+      return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: FileImage(File(widget.newForThisScreen.image)),
+                fit: BoxFit.cover)),
+      );
+    } else if (widget.newForThisScreen.isANetworkImage) {
+      return Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(widget.newForThisScreen.image),
+                  fit: BoxFit.cover)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +51,7 @@ class CompleteNew extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.25,
-              child: Image.asset(
-                newForThisScreen.image,
-                fit: BoxFit.cover,
-              ),
+              child: selectImage()
             ),
             Padding(
                 padding: const EdgeInsets.all(kDefaultPadding),
@@ -35,14 +61,14 @@ class CompleteNew extends StatelessWidget {
                     //Date
                     Container(
                       child: Text(
-                        newForThisScreen.date,
+                        widget.newForThisScreen.date,
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ),
                     //Title
                     Container(
                       child: Text(
-                        newForThisScreen.title,
+                        widget.newForThisScreen.title,
                         style: TextStyle(
                             fontSize: 24.0,
                             color: kDarkBlackColor,
@@ -53,9 +79,10 @@ class CompleteNew extends StatelessWidget {
                     ),
                     //Description
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+                      margin:
+                          EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
                       child: Text(
-                        newForThisScreen.description,
+                        widget.newForThisScreen.description,
                         style: TextStyle(height: 1.5),
                       ),
                     ),

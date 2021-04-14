@@ -1,6 +1,6 @@
 import 'package:arg_msjz/Journalists/bloc/journalist_bloc.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/submit_button.dart';
-import 'package:arg_msjz/Journalists/ui/widgets/text_fields.dart';
+import 'package:arg_msjz/Journalists/ui/widgets/text_fields_with_shadow.dart';
 import 'package:arg_msjz/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -62,7 +62,10 @@ class JournalistSignInScreen extends StatelessWidget {
             SubmitButton(
               text: "Ingresar",
               onPressed: () {
-                journalistBloc.signIn(email: emailController.text, password: passwordController.text);
+                journalistBloc.signOut();
+                journalistBloc.signIn(
+                    email: emailController.text,
+                    password: passwordController.text);
               },
             ),
             Spacer(flex: 2)

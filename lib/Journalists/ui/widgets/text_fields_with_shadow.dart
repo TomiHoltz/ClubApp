@@ -7,18 +7,21 @@ class TextFieldWithShadow extends StatelessWidget {
     Key key,
     @required this.controller,
     @required this.hintText,
-    @required this.icon,
+    this.icon,
+    this.onChanged
   }) : super(key: key);
 
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
+  final Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: TextFormField(
+        onChanged: onChanged,
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,

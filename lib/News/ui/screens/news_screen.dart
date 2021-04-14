@@ -1,11 +1,10 @@
-import 'package:arg_msjz/Journalists/ui/screens/journalist_signin_screen.dart';
+import 'package:arg_msjz/Journalists/bloc/journalist_bloc.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/handle_journalist_signin.dart';
-import 'package:arg_msjz/News/model/New.dart';
-import 'package:arg_msjz/News/ui/widgets/new_card.dart';
 import 'package:arg_msjz/constants.dart';
 import 'package:arg_msjz/widgets/drawer/menu_controller.dart';
 import 'package:arg_msjz/widgets/drawer/menu_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -14,6 +13,7 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    JournalistBloc journalistBloc = BlocProvider.of<JournalistBloc>(context);
     return Scaffold(
       key: _controller.scaffoldfKey,
       drawer: MenuDrawer(),
@@ -38,20 +38,24 @@ class NewsScreen extends StatelessWidget {
             left: kDefaultPadding, right: kDefaultPadding),
         child: Container(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                NewCard(
-                  newForThisCard: New(
-                      title: "El basquet retoma los entrenamientos este martes",
-                      image: "assets/basq.jpg",
-                      description:
-                          "Después de las prohibiciones del COE durante meses, finalmente se retomarán los entrenamientos con los siguientes protocolos.",
-                      date: "23 de septiembre",
-                      section: "Basquet"),
-                ),
-              ],
-            ),
-          ),
+              child: StreamBuilder(
+            stream: journalistBloc.newsStream(),
+            builder: (context, AsyncSnapshot snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                case ConnectionState.active:
+                case ConnectionState.done:
+                  return Column(
+                    children:
+                        journalistBloc.buildNews(list: snapshot.data.docs),
+                  );
+                default:
+                  return Center(child: CircularProgressIndicator());
+              }
+            },
+          )),
         ),
       ),
     );

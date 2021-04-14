@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:arg_msjz/constants.dart';
-import 'package:get/get.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({Key key, @required this.text, @required this.onPressed})
