@@ -10,10 +10,10 @@ class SplashScreenPage extends StatelessWidget {
       seconds: 3,
       backgroundColor: kSecondaryColor,
       image: Image.asset('assets/arg.png'),
-      photoSize: 80,
+      photoSize: MediaQuery.of(context).size.height * 0.1,
       useLoader: true,
       loaderColor: kPrimaryColor,
-      loadingText: Text("By StartClub", style: TextStyle(color: kAccentColor, fontFamily: "Lato", fontWeight: FontWeight.bold)),
+      loadingText: Text("By StartClub", style: TextStyle(color: kSecondaryColor, fontFamily: "Lato", fontWeight: FontWeight.bold)),
       navigateAfterSeconds: ClubHome(),
     );
   }
