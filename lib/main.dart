@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'News/bloc/news_bloc.dart';
+import 'package:arg_msjz/Club/bloc/club_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,19 +22,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      child: BlocProvider(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: clubName,
-          theme: ThemeData(
-            primarySwatch: kPrimaryColor,
-            scaffoldBackgroundColor: Color(0xFFE7E7E7),
+          child: BlocProvider(
+        child: BlocProvider(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: clubName,
+            theme: ThemeData(
+              primarySwatch: kPrimaryColor,
+              scaffoldBackgroundColor: Color(0xFFE7E7E7),
+            ),
+            home: SplashScreenPage(),
           ),
-          home: SplashScreenPage(),
+          bloc: JournalistBloc(),
         ),
-        bloc: JournalistBloc(),
+        bloc: NewsBloc(),
       ),
-      bloc: NewsBloc(),
+      bloc: ClubBloc(),
     );
   }
 }

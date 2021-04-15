@@ -1,13 +1,16 @@
+import 'package:arg_msjz/club_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:arg_msjz/Club/ui/screens/contact_screen.dart';
+import 'package:arg_msjz/Club/ui/screens/sports_screen.dart';
 
 class MenuController extends GetxController {
   RxInt _selectedIndex = 0.obs;
   GlobalKey<ScaffoldState> _scaffoldfKey = GlobalKey<ScaffoldState>();
 
   int get selectedIndex => _selectedIndex.value;
-  List<String> get menuItems => ["Deportes", "Contacto"];
-  List<Widget> get menuScreens => [];
+  List<String> get menuItems => ["Noticias", "Deportes", "Contacto"];
+  List<Widget> get menuScreens => [ClubHome(), SportsScreen(), ContactScreen()];
   GlobalKey<ScaffoldState> get scaffoldfKey => _scaffoldfKey;
 
   void openOrCloseDrawer() {

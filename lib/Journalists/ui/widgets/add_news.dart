@@ -13,12 +13,12 @@ import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:arg_msjz/widgets/my_alert_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddNewsScreen extends StatefulWidget {
+class AddNews extends StatefulWidget {
   @override
-  _AddNewsScreenState createState() => _AddNewsScreenState();
+  _AddNewsState createState() => _AddNewsState();
 }
 
-class _AddNewsScreenState extends State<AddNewsScreen> {
+class _AddNewsState extends State<AddNews> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController seccionController = TextEditingController();
