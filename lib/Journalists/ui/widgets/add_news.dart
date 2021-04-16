@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:arg_msjz/Journalists/bloc/journalist_bloc.dart';
-import 'package:arg_msjz/News/bloc/news_bloc.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/control_panel_fab.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/submit_button.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/text_fields_with_shadow.dart';
@@ -55,7 +54,7 @@ class _AddNewsState extends State<AddNews> {
   }
 
   void uploadNew() {
-    BlocProvider.of<NewsBloc>(context)
+    BlocProvider.of<JournalistBloc>(context)
         .getImageUrl(image: File(cardImagePath), path: titleController.text)
         .then((imageUrl) {
       BlocProvider.of<JournalistBloc>(context)

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:arg_msjz/Club/model/Sport.dart';
 import 'package:arg_msjz/Club/ui/widgets/sport_button.dart';
 
-class CloudFirestoreAPI {
+class CloudFirestoreClub {
   final FirebaseFirestore dataBase = FirebaseFirestore.instance;
 
   final String SPORTS = "sports";
@@ -18,12 +18,15 @@ class CloudFirestoreAPI {
 
   List<SportButton> buildSports({@required List<DocumentSnapshot> list}) {
     List<SportButton> newsCards = <SportButton>[];
-    list.forEach((news) {
+    list.forEach((sport) {
       newsCards.add(SportButton(
         sport: Sport(
-            sport: news.data()['sport'],
+            sport: sport.data()['sport'],
+            trainingPlace: sport.data()['trainingPlace'],
+            coachesName: sport.data()['coachesName']
       )));
     });
     return newsCards;
   }
+
 }

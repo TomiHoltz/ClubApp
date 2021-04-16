@@ -1,3 +1,4 @@
+import 'package:arg_msjz/constants.dart';
 import 'package:arg_msjz/widgets/background_gradient.dart';
 import 'package:arg_msjz/widgets/drawer/menu_drawer.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class SportsScreen extends StatelessWidget {
             Column(
               children: [
                 ScreenTitle(title: "Deportes"),
+                SizedBox(height: kDefaultPadding),
                 SportsList()
               ],
             ),

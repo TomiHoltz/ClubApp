@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:arg_msjz/Club/model/Sport.dart';
+import 'package:page_transition/page_transition.dart';
 import '../../../constants.dart';
+import 'package:arg_msjz/Club/ui/widgets/sports_complete_information.dart';
 
 class SportButton extends StatelessWidget {
-  const SportButton({
-    Key key,
-    @required this.sport
-  }) : super(key: key);
+  const SportButton({Key key, @required this.sport}) : super(key: key);
 
   final Sport sport;
 
@@ -26,10 +25,18 @@ class SportButton extends StatelessWidget {
         ],
       ),
       child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              PageTransition(
+                  child: SportCompleteInformation(sport: sport,),
+                  type: PageTransitionType.rightToLeft));
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(sport.sport, style: TextStyle(fontFamily: "Lato", fontSize: 15)),
+            Text(sport.sport,
+                style: TextStyle(fontFamily: "Lato", fontSize: 15)),
             Icon(Icons.arrow_forward_ios)
           ],
         ),
