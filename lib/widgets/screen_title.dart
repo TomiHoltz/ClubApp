@@ -13,7 +13,7 @@ class ScreenTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: kDefaultPadding * 3),
+      margin: EdgeInsets.only(top: kDefaultPadding * 4),
       alignment: Alignment.topCenter,
       child: Text(
         title,

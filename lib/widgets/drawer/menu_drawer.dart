@@ -26,12 +26,16 @@ class MenuDrawer extends StatelessWidget {
                     title: _controller.menuItems[index],
                     isActive: index == _controller.selectedIndex,
                     onPressed: () {
+                      if(index == _controller.selectedIndex){
+                        Navigator.pop(context);
+                      } else {
                       _controller.setMenuIndex(index);
                       Navigator.pushReplacement(
                           context,
                           PageTransition(
                               child: _controller.menuScreens[index],
                               type: PageTransitionType.leftToRight));
+                      }
                     }))
           ],
         ),

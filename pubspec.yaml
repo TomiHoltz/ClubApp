@@ -28,6 +28,7 @@ dependencies:
   firebase_auth: ^1.1.0
   firebase_core: ^1.0.3
   firebase_storage: ^8.0.3
+  flutter_webview_plugin: ^0.3.11
   generic_bloc_provider: ^1.1.0
   get: ^4.1.3
   image_picker: ^0.7.4
@@ -38,6 +39,11 @@ dev_dependencies:
     sdk: flutter
 
   splashscreen: ^1.3.5
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/arg.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -76,6 +82,9 @@ flutter:
           weight: 600
         - asset: fonts/Raleway/Raleway-Bold.ttf
           weight: 700
+    - family: SocialMediaIcons
+      fonts:
+        - asset: assets/Icons/SocialMediaIcons.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
