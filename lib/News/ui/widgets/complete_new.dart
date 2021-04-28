@@ -19,7 +19,7 @@ class CompleteNew extends StatefulWidget {
 
 class _CompleteNewState extends State<CompleteNew> {
   selectImage() {
-    if (widget.newForThisScreen.isAnAssetImage) {
+    if (widget.newForThisScreen.thereIsNoImage) {
       return Image.asset(
         widget.newForThisScreen.image,
         fit: BoxFit.cover,

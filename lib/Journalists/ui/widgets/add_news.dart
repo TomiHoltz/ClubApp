@@ -29,8 +29,9 @@ class _AddNewsState extends State<AddNews> {
   String cardDate =
       "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
 
-  bool isAnAssetImage = true;
+  bool thereIsNoImage = true;
   bool isAGalleryImage = false;
+  bool isANetworkImage = false;
   ImagePicker picker = ImagePicker();
 
   cardState() {
@@ -47,7 +48,7 @@ class _AddNewsState extends State<AddNews> {
     picker.getImage(source: ImageSource.gallery).then((value) {
       setState(() {
         cardImagePath = value.path;
-        isAnAssetImage = false;
+        thereIsNoImage = false;
         isAGalleryImage = true;
       });
     });
@@ -74,7 +75,7 @@ class _AddNewsState extends State<AddNews> {
           cardImagePath = 'assets/basq.jpg';
           cardSeccion = "Seccion";
           isAGalleryImage = false;
-          isAnAssetImage = true;
+          thereIsNoImage = true;
         });
         titleController.clear();
         descriptionController.clear();
@@ -95,9 +96,9 @@ class _AddNewsState extends State<AddNews> {
             children: [
               NewCard(
                   newForThisCard: New(
-                    isAnAssetImage: isAnAssetImage,
-                    isAGalleryImage: isAGalleryImage,
-                    isANetworkImage: false,
+                      thereIsNoImage: thereIsNoImage,
+                      isAGalleryImage: isAGalleryImage,
+                      isANetworkImage: false,
                       title: cardTitle,
                       date: cardDate,
                       description: cardDescription,
@@ -113,7 +114,7 @@ class _AddNewsState extends State<AddNews> {
                     onPressed: () {
                       pickImage();
                     },
-                    heroTag: "Refresh Button"),
+                    heroTag: "PickImage Button"),
               )
             ],
           ),
@@ -132,6 +133,7 @@ class _AddNewsState extends State<AddNews> {
           TextFieldWithShadow(
             controller: descriptionController,
             hintText: "Description",
+            height: 80.0,
             onChanged: (String description) {
               setState(() {
                 cardDescription = description;
@@ -154,26 +156,40 @@ class _AddNewsState extends State<AddNews> {
           SubmitButton(
               text: "Subir noticia",
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return MyAlertDialog(
-                        title: "Seguro que quires subir la noticia?",
-                        actions: [
-                          TextButton(
-                              child: Text("No"),
+                if (titleController.text.isNotEmpty &&
+                    descriptionController.text.isNotEmpty &&
+                    seccionController.text.isNotEmpty &&
+                    !thereIsNoImage) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return MyAlertDialog(
+                          title: "Seguro que quires subir la noticia?",
+                          actions: [
+                            TextButton(
+                                child: Text("No"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
+                            TextButton(
+                              child: Text("Si"),
                               onPressed: () {
-                                Navigator.pop(context);
-                              }),
-                          TextButton(
-                            child: Text("Si"),
-                            onPressed: () {
-                              uploadNew();
-                            },
-                          )
-                        ],
-                      );
-                    });
+                                uploadNew();
+                              },
+                            )
+                          ],
+                        );
+                      });
+                } else if (titleController.text.isNotEmpty &&
+                    descriptionController.text.isNotEmpty &&
+                    seccionController.text.isNotEmpty &&
+                    thereIsNoImage) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Seleccione una foto del dispositivo")));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Por favor rellene todos los campos")));
+                }
               })
         ],
       ),

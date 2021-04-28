@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:arg_msjz/Journalists/bloc/journalist_bloc.dart';
 import 'package:arg_msjz/constants.dart';
 import 'package:arg_msjz/splash_screen_page.dart';
@@ -11,6 +12,10 @@ import 'package:arg_msjz/Club/bloc/club_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await disableLandscapeMode();
+}
+
+Future<void> disableLandscapeMode() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(new MyApp());
@@ -22,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-          child: BlocProvider(
+      child: BlocProvider(
         child: BlocProvider(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

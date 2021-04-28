@@ -15,7 +15,7 @@ class NewsBloc implements Bloc {
 
   //Listening the "news collection"
   Stream<QuerySnapshot> newsStream() => FirebaseFirestore.instance
-      .collection(CloudFirestoreAPI().NEWS)
+      .collection(CloudFirestoreAPI().NEWS).orderBy('timestamp', descending: true)
       .snapshots();
 
   @override

@@ -23,8 +23,12 @@ class JournalistBloc implements Bloc {
   Stream<User> get getCurrentUser => currentUserStream;
 
   //SignIn with Firebase
-  Future<User> signIn({@required String email, @required String password}) =>
-      _authRepository.signIn(email: email, password: password);
+  Future<User> signIn(
+          {@required String email,
+          @required String password,
+          @required BuildContext context}) =>
+      _authRepository.signIn(
+          email: email, password: password, context: context);
 
   //Sign out with firebase
   signOut() => _authRepository.signOut();

@@ -31,7 +31,7 @@ class CloudFirestoreAPI {
       newsCards.add(NewCard(
         newForThisCard: New(
             isAGalleryImage: false,
-            isAnAssetImage: false,
+            thereIsNoImage: false,
             isANetworkImage: true,
             title: news.data()['title'],
             description: news.data()['description'],
