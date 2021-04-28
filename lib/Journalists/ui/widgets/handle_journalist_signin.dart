@@ -1,5 +1,5 @@
 import 'package:arg_msjz/Journalists/bloc/journalist_bloc.dart';
-import 'package:arg_msjz/Journalists/ui/screens/journalist_home.dart';
+import 'package:arg_msjz/Journalists/ui/journalist_navigation_bar.dart';
 import 'package:arg_msjz/Journalists/ui/screens/journalist_signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -25,7 +25,7 @@ class _HandleJournalistSignInState extends State<HandleJournalistSignIn> {
         if (!snapshot.hasData || snapshot.hasError) {
           return JournalistSignInScreen();
         } else {
-          return JournalistHome();
+          return JournalistNavigationBar();
         }
       },
     );

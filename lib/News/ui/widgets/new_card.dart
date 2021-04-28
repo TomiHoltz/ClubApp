@@ -10,8 +10,9 @@ import '../../../constants.dart';
 class NewCard extends StatefulWidget {
   final New newForThisCard;
 
-  NewCard(
-      {@required this.newForThisCard,});
+  NewCard({
+    @required this.newForThisCard,
+  });
 
   @override
   _NewCardState createState() => _NewCardState();
@@ -19,10 +20,15 @@ class NewCard extends StatefulWidget {
 
 class _NewCardState extends State<NewCard> {
   selectImage() {
-    if (widget.newForThisCard.isAnAssetImage) {
-      return Image.asset(
-        widget.newForThisCard.image,
-        fit: BoxFit.cover,
+    if (widget.newForThisCard.thereIsNoImage) {
+      return Container(
+        color: kSecondaryColor,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Icon(Icons.photo_camera), Text("Selecciona una foto")],
+          ),
+        ),
       );
     } else if (widget.newForThisCard.isAGalleryImage) {
       return Container(
@@ -33,10 +39,10 @@ class _NewCardState extends State<NewCard> {
       );
     } else if (widget.newForThisCard.isANetworkImage) {
       return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(widget.newForThisCard.image),
-                fit: BoxFit.cover)));
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(widget.newForThisCard.image),
+                  fit: BoxFit.cover)));
     }
   }
 

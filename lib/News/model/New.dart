@@ -4,7 +4,7 @@ class New {
   final String date, title, description, image, section;
   final Timestamp
       timestamp; //We are going to order the news in the feed by this.
-  final bool isAnAssetImage;
+  final bool thereIsNoImage;
   final bool isAGalleryImage;
   final bool isANetworkImage;
 
@@ -16,6 +16,6 @@ class New {
       this.section,
       this.timestamp,
       this.isAGalleryImage,
-      this.isAnAssetImage,
+      this.thereIsNoImage,
       this.isANetworkImage});
 }

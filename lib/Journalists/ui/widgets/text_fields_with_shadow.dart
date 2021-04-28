@@ -3,30 +3,36 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class TextFieldWithShadow extends StatelessWidget {
-  const TextFieldWithShadow({
-    Key key,
-    @required this.controller,
-    @required this.hintText,
-    this.icon,
-    this.onChanged
-  }) : super(key: key);
+  const TextFieldWithShadow(
+      {Key key,
+      @required this.controller,
+      @required this.hintText,
+      this.icon,
+      this.maxLines,
+      this.height,
+      this.onChanged})
+      : super(key: key);
 
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
   final Function(String) onChanged;
+  final int maxLines;
+  final double height; //We are goig to use it just if maxLines > 1
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
       margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: TextFormField(
         onChanged: onChanged,
         controller: controller,
+        keyboardType: TextInputType.multiline,
+        maxLines: maxLines,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hintText,
-          //fillColor: kPrimaryColor,
           suffixIcon: Icon(icon),
         ),
       ),

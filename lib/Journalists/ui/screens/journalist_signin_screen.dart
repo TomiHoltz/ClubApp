@@ -13,11 +13,20 @@ class JournalistSignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     JournalistBloc journalistBloc = BlocProvider.of<JournalistBloc>(context);
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: kDarkBlackColor),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ),
       body: Container(
-        child: Column(
+        child: ListView(
           children: [
             //Logo
-            Spacer(),
             Container(
               height: MediaQuery.of(context).size.height * 0.13,
               decoration: BoxDecoration(
@@ -62,13 +71,19 @@ class JournalistSignInScreen extends StatelessWidget {
             SubmitButton(
               text: "Ingresar",
               onPressed: () {
-                journalistBloc.signOut();
-                journalistBloc.signIn(
-                    email: emailController.text,
-                    password: passwordController.text);
+                if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          "Ingresa un correo electronico y una contraseña")));
+                } else {
+                  journalistBloc.signOut();
+                  journalistBloc.signIn(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      context: context);
+                }
               },
             ),
-            Spacer(flex: 2)
           ],
         ),
       ),

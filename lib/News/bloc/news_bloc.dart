@@ -1,37 +1,22 @@
-import 'dart:io';
-
+import 'package:arg_msjz/News/ui/widgets/new_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:arg_msjz/News/repository/photos_storage/storage_repository.dart';
+import 'package:arg_msjz/Journalists/repository/news_storage/cloud_firestore_repository.dart';
+import 'package:arg_msjz/Journalists/repository/news_storage/cloud_firestore_api.dart';
 
 class NewsBloc implements Bloc {
-  final StorageRepository _storageRepository = StorageRepository();
+  final CloudFirestoreRepository _cloudFirestoreRepository =
+      CloudFirestoreRepository();
 
-  //Uploading new's pictures to Firebase Storage anf getting the image's Url
-  uploadFile({String path, File image}) async =>
-      _storageRepository.uploadFile(path: path, image: image);
+  //Build news in the feed
+  List<NewCard> buildNews({@required List<DocumentSnapshot> list}) =>
+      _cloudFirestoreRepository.buildNews(list: list);
 
-  Future<String> getImageUrl({File image, String path}) async {
-    final uploadTask =
-        uploadFile(path: path, image: image);
-    if (uploadTask == null) {
-      print('Null upload task');
-      return null;
-    }
-
-    final taskSnapshot = await uploadTask;
-    if (taskSnapshot == null) {
-      print('Null task snapshot');
-      return null;
-    }
-
-    final imageUrl = await taskSnapshot.ref.getDownloadURL();
-    if (imageUrl == null) {
-      print('Null image URL');
-      return null;
-    }
-
-    return (imageUrl);
-  }
+  //Listening the "news collection"
+  Stream<QuerySnapshot> newsStream() => FirebaseFirestore.instance
+      .collection(CloudFirestoreAPI().NEWS).orderBy('timestamp', descending: true)
+      .snapshots();
 
   @override
   void dispose() {}

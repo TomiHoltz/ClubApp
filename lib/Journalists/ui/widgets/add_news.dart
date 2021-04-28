@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:arg_msjz/Journalists/bloc/journalist_bloc.dart';
-import 'package:arg_msjz/News/bloc/news_bloc.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/control_panel_fab.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/submit_button.dart';
 import 'package:arg_msjz/Journalists/ui/widgets/text_fields_with_shadow.dart';
@@ -13,12 +12,12 @@ import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:arg_msjz/widgets/my_alert_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddNewsScreen extends StatefulWidget {
+class AddNews extends StatefulWidget {
   @override
-  _AddNewsScreenState createState() => _AddNewsScreenState();
+  _AddNewsState createState() => _AddNewsState();
 }
 
-class _AddNewsScreenState extends State<AddNewsScreen> {
+class _AddNewsState extends State<AddNews> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController seccionController = TextEditingController();
@@ -30,8 +29,9 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
   String cardDate =
       "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
 
-  bool isAnAssetImage = true;
+  bool thereIsNoImage = true;
   bool isAGalleryImage = false;
+  bool isANetworkImage = false;
   ImagePicker picker = ImagePicker();
 
   cardState() {
@@ -48,14 +48,14 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
     picker.getImage(source: ImageSource.gallery).then((value) {
       setState(() {
         cardImagePath = value.path;
-        isAnAssetImage = false;
+        thereIsNoImage = false;
         isAGalleryImage = true;
       });
     });
   }
 
   void uploadNew() {
-    BlocProvider.of<NewsBloc>(context)
+    BlocProvider.of<JournalistBloc>(context)
         .getImageUrl(image: File(cardImagePath), path: titleController.text)
         .then((imageUrl) {
       BlocProvider.of<JournalistBloc>(context)
@@ -75,7 +75,7 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
           cardImagePath = 'assets/basq.jpg';
           cardSeccion = "Seccion";
           isAGalleryImage = false;
-          isAnAssetImage = true;
+          thereIsNoImage = true;
         });
         titleController.clear();
         descriptionController.clear();
@@ -96,9 +96,9 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
             children: [
               NewCard(
                   newForThisCard: New(
-                    isAnAssetImage: isAnAssetImage,
-                    isAGalleryImage: isAGalleryImage,
-                    isANetworkImage: false,
+                      thereIsNoImage: thereIsNoImage,
+                      isAGalleryImage: isAGalleryImage,
+                      isANetworkImage: false,
                       title: cardTitle,
                       date: cardDate,
                       description: cardDescription,
@@ -114,7 +114,7 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
                     onPressed: () {
                       pickImage();
                     },
-                    heroTag: "Refresh Button"),
+                    heroTag: "PickImage Button"),
               )
             ],
           ),
@@ -133,6 +133,7 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
           TextFieldWithShadow(
             controller: descriptionController,
             hintText: "Description",
+            height: 80.0,
             onChanged: (String description) {
               setState(() {
                 cardDescription = description;
@@ -155,26 +156,40 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
           SubmitButton(
               text: "Subir noticia",
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return MyAlertDialog(
-                        title: "Seguro que quires subir la noticia?",
-                        actions: [
-                          TextButton(
-                              child: Text("No"),
+                if (titleController.text.isNotEmpty &&
+                    descriptionController.text.isNotEmpty &&
+                    seccionController.text.isNotEmpty &&
+                    !thereIsNoImage) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return MyAlertDialog(
+                          title: "Seguro que quires subir la noticia?",
+                          actions: [
+                            TextButton(
+                                child: Text("No"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
+                            TextButton(
+                              child: Text("Si"),
                               onPressed: () {
-                                Navigator.pop(context);
-                              }),
-                          TextButton(
-                            child: Text("Si"),
-                            onPressed: () {
-                              uploadNew();
-                            },
-                          )
-                        ],
-                      );
-                    });
+                                uploadNew();
+                              },
+                            )
+                          ],
+                        );
+                      });
+                } else if (titleController.text.isNotEmpty &&
+                    descriptionController.text.isNotEmpty &&
+                    seccionController.text.isNotEmpty &&
+                    thereIsNoImage) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Seleccione una foto del dispositivo")));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Por favor rellene todos los campos")));
+                }
               })
         ],
       ),

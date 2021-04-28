@@ -4,21 +4,21 @@ import 'package:arg_msjz/constants.dart';
 import 'package:arg_msjz/widgets/background_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:arg_msjz/widgets/screen_title.dart';
+import '../widgets/add_news.dart';
 
-import 'add_news_screen.dart';
-
-class JournalistHome extends StatefulWidget {
+class JournalistNews extends StatefulWidget {
   @override
-  _JournalistHomeState createState() => _JournalistHomeState();
+  _JournalistNewsState createState() => _JournalistNewsState();
 }
 
-class _JournalistHomeState extends State<JournalistHome> {
-  bool isAddActive = false;
+class _JournalistNewsState extends State<JournalistNews> {
+  bool isAddActive = true;
   bool isDeleteActive;
 
   Widget addNews() {
     if (isAddActive) {
-      return AddNewsScreen();
+      return AddNews();
     } else {
       return null;
     }
@@ -29,23 +29,13 @@ class _JournalistHomeState extends State<JournalistHome> {
     JournalistBloc journalistBloc = BlocProvider.of<JournalistBloc>(context);
     return Scaffold(
       body: SingleChildScrollView(
-              child: Stack(
+        child: Stack(
           children: [
             BackgroundGradient(),
             Column(
               children: [
                 //Title
-                Container(
-                  margin: EdgeInsets.only(top: kDefaultPadding * 3),
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    "Panel de control",
-                    style: TextStyle(
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28),
-                  ),
-                ),
+                ScreenTitle(title: "Agregar noticias",),
                 //Fabs
                 Container(
                   margin: EdgeInsets.only(top: kDefaultPadding),
@@ -65,15 +55,7 @@ class _JournalistHomeState extends State<JournalistHome> {
                         mini: false,
                         icon: Icons.add,
                         iconSize: 40,
-                        onPressed: () {
-                          setState(() {
-                            if (!isAddActive) {
-                              isAddActive = true;
-                            } else if (isAddActive = true) {
-                              isAddActive = false;
-                            }
-                          });
-                        },
+                        onPressed: () {},
                         heroTag: "Add Btn",
                       ),
                       ControlPanelFAB(
@@ -97,3 +79,5 @@ class _JournalistHomeState extends State<JournalistHome> {
     );
   }
 }
+
+
